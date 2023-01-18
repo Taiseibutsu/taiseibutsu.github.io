@@ -1,16 +1,44 @@
-<html lang="es"><head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css">
 
-<title> 3DLAB </title><script>
-    
-            </script></head>
-<!--
-<body style="background-color:rgb(25, 24, 26);"></body>
--->
-
-<!-- START TEXT -->
-
-<body><p class="pc"> 🚧 Web Under Construction</p>
+    <title> Galleta de la suerte </title>
+</head>
 
 
-</body></html>
+<body>
+    <script src="js/three.js"></script>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(74, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.boy.appendChild(renderer.domElement);
+        
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        const cube = new THREE.Mesh(geometry,material)
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame( animate );
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+
+
+
+</body>
+
+
+
+
+</html>
