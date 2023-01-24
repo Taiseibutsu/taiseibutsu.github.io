@@ -3,7 +3,7 @@
 function main() {
   const canvas = document.querySelector('#c');
   const renderer = new THREE.WebGLRenderer({canvas});
-
+  
   const fov = 45;
   const aspect = 2;  // the canvas default
   const near = 0.1;
@@ -21,14 +21,14 @@ function main() {
   {
     const skyColor = 0xB1E1FF;  // light blue
     const groundColor = 0xB97A20;  // brownish orange
-    const intensity = 1;
+    const intensity = .8;
     const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
     scene.add(light);
   }
 
   {
     const color = 0xFFFFFF;
-    const intensity = 1;
+    const intensity = .4;
     const light = new THREE.DirectionalLight(color, intensity);
     light.position.set(5, 10, 2);
     scene.add(light);
@@ -50,6 +50,10 @@ function main() {
       objLoader.load(OBJFile, (event) => {
         var texture = new THREE.TextureLoader().load(JPGFile);
         var root = event.detail.loaderRootNode;
+        root.scale.set(0.9,0.9,0.9);
+        root.rotateX( 95 * Math.PI / 180 );
+        root.rotateY( 35 * Math.PI / 180 );
+        root.rotateZ( 5 * Math.PI / 180 );
         root.traverse(function (child){
           if (child instanceof THREE.Mesh) {
             child.material.map = texture;
@@ -59,7 +63,7 @@ function main() {
       });
     });
   }
-
+  
   function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
     const width = canvas.clientWidth;
@@ -70,22 +74,22 @@ function main() {
     }
     return needResize;
   }
-
+  
   function render() {
-
+    
     if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
     }
-
+    
     
     renderer.render(scene, camera);
-    
-    requestAnimationFrame(render);
     scene.rotation.x += 0.005;
     scene.rotation.y += 0.01;
     scene.rotation.z += 0.002;
+    
+    requestAnimationFrame(render);
   }
 
   requestAnimationFrame(render);
