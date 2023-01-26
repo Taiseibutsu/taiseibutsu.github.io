@@ -18,18 +18,12 @@ function main() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color('black');
 
-  {
-    const skyColor = 0xB1E1FF;  // light blue
-    const groundColor = 0xB97A20;  // brownish orange
-    const intensity = .8;
-    const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-    scene.add(light);
-  }
+
 
   {
     const color = 0xFFFFFF;
-    const intensity = .4;
-    const light = new THREE.DirectionalLight(color, intensity);
+    const intensity = 1.3;
+    const light = new THREE.AmbientLight(color, intensity);
     light.position.set(5, 10, 2);
     scene.add(light);
     scene.add(light.target);
@@ -42,15 +36,16 @@ function main() {
 
     var textureLoader = new THREE.TextureLoader();
     var map = textureLoader.load(JPGFile);
-    var material = new THREE.MeshPhongMaterial({map: map});
+    var matmat = new THREE.MeshBasicMaterial({map: map});
     
+    var size = 0.8;
     const objLoader = new THREE.OBJLoader2();
-    objLoader.loadMtl(MTLFile, null, (material) => {
-      objLoader.setMaterials(material);
+    objLoader.loadMtl(MTLFile, null, (materiale) => {
+      objLoader.setMaterials(matmat);
       objLoader.load(OBJFile, (event) => {
         var texture = new THREE.TextureLoader().load(JPGFile);
         var root = event.detail.loaderRootNode;
-        root.scale.set(0.9,0.9,0.9);
+        root.scale.set(size,size,size);
         root.rotateX( 95 * Math.PI / 180 );
         root.rotateY( 35 * Math.PI / 180 );
         root.rotateZ( 5 * Math.PI / 180 );
